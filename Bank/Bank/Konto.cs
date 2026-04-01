@@ -12,7 +12,7 @@
 
         }
         public string Nazwa => klient;
-        public decimal Blilans => bilans;
+        public decimal Bilans => bilans;
         public bool CzyZablokowane => zablokowane;
 
         public void BlokujKonto() => zablokowane = true;
