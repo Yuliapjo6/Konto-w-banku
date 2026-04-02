@@ -58,5 +58,32 @@ namespace BankTests
             Assert.AreEqual(-30, konto.Bilans);
             Assert.IsTrue(konto.CzyZablokowane, "Konto powinno zostać zablokowane");
         }
+        [TestMethod]
+        public void KontoLimit_Wyplata_DelegujeZadanieDoWewnetrznegoKonta()
+        {
+            // Arrange
+            var konto = new KontoLimit("Anna Kowalska", 200, 100);
+
+            // Act
+            konto.Wyplata(50);
+
+            // Assert
+            Assert.AreEqual(150, konto.Bilans);
+        }
+
+        [TestMethod]
+        public void KontoLimit_PrzekroczenieLimitu_RzucaWyjatek()
+        {
+            // Arrange
+            var konto = new KontoLimit("Anna Kowalska", 100, 50);
+
+            // Act & Assert
+            try
+            {
+                konto.Wyplata(200);
+                Assert.Fail("Powinien zostać rzucony wyjątek o przekroczeniu limitu!");
+            }
+            catch (InvalidOperationException){ }
+        }
     }
 }
