@@ -30,7 +30,7 @@ namespace BankTests
                 konto.Wyplata(50);
                 Assert.Fail("Wyjątek nie został rzucony, a powinien!");
             }
-            catch (InvalidOperationException){ }
+            catch (InvalidOperationException) { }
         }
 
         [TestMethod]
@@ -45,6 +45,18 @@ namespace BankTests
             // Assert
             Assert.AreEqual(60, konto.Bilans);
         }
+        [TestMethod]
+        public void KontoPlus_Wyplata_WykorzystujeLimit_BlokujeKonto()
+        {
+            // Arrange
+            var konto = new KontoPlus("Adam Nowak", 100, 50);
 
+            // Act
+            konto.Wyplata(130);
+
+            // Assert
+            Assert.AreEqual(-30, konto.Bilans);
+            Assert.IsTrue(konto.CzyZablokowane, "Konto powinno zostać zablokowane");
+        }
     }
 }
