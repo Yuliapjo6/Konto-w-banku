@@ -1,5 +1,5 @@
 ﻿using Bank;
-
+using System;
 namespace BankTests
 {
     [TestClass]
@@ -24,8 +24,13 @@ namespace BankTests
             var konto = new Konto("Jan Molenda", 100);
             konto.BlokujKonto();
 
-            // Act
-            konto.Wyplata(50);
+            // Act & Assert
+            try
+            {
+                konto.Wyplata(50);
+                Assert.Fail("Wyjątek nie został rzucony, a powinien!");
+            }
+            catch (InvalidOperationException){ }
         }
 
         [TestMethod]
